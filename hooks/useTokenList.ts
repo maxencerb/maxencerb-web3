@@ -1,5 +1,7 @@
 import { Token } from "@/types/tokens"
 import { getImportedToken, getPolygonTokenList, isEthAdress } from "@/utils/token"
+import type { BigNumber } from "ethers"
+import { formatUnits } from "ethers/lib/utils.js"
 import { useMemo } from "react"
 import useSWR from 'swr'
 
@@ -28,12 +30,26 @@ const usePolygonTokenList = () => {
     }
 }
 
-const useTokenSearch = (tokens: Token[], searchRaw: string): Token[] => {
+const useTokenSearch = (tokens: Token[], searchRaw: string, balances?: {[key: string]: BigNumber}): Token[] => {
     
     const search = searchRaw.toLowerCase();
+
+    const floatBalances = useMemo(() => {
+        if (!balances) return {}
+        return Object.keys(balances).reduce<{[key: string]: number}>((prev, address) => {
+            const token = tokens.find(t => t.address.toLowerCase() === address)
+            const decimals = token?.decimals || 18
+            return {
+                ...prev,
+                [address]: parseFloat(formatUnits(balances[address], decimals))
+            }
+        }, {})
+    }, [balances, tokens])
     
     const tokensResult = useMemo(() => {
-        if (search === "") return tokens
+        if (search === "") return tokens.sort((a, b) => {
+            return floatBalances[b.address.toLowerCase()] - floatBalances[a.address.toLowerCase()]
+        })
 
         const isAddress = isEthAdress(search)
         if (isAddress) {
@@ -70,7 +86,7 @@ const useTokenSearch = (tokens: Token[], searchRaw: string): Token[] => {
 
         return sorted
 
-    }, [tokens, search]) as Token[]
+    }, [tokens, search, floatBalances]) as Token[]
     return tokensResult
 }
 

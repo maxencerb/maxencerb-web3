@@ -15,7 +15,7 @@ type Token = {
     name: string,
     symbol: string,
     decimals: number,
-    address: string,
+    address: `0x${string}`,
     logoURI?: string,
     tags?: string[],
     extension?: TokenExtension

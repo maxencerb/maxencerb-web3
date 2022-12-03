@@ -24,3 +24,20 @@ export function Button({ children, href, onPress }: ButtonProps) {
         </button>
     )
 }
+
+export function IconButton({children, href, onPress}: ButtonProps) {
+    
+    const className="bg-white bg-opacity-0 transition hover:bg-opacity-40 p-2 rounded-md aspect-square flex items-center justify-center"
+    
+    return href ? (
+        <Link href={href} target='_blank'>
+            <button className={className}>
+                {children}
+            </button>
+        </Link>
+    ) : (
+        <button className={className} onClick={onPress}>
+            {children}
+        </button>
+    )
+}

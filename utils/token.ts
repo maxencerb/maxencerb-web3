@@ -40,10 +40,17 @@ const importToken = async (address: `0x${string}`, revalidate?: () => void) => {
     revalidate?.()
 }
 
+const truncateAddress = (address: string) => {
+    return address.slice(0, 4) +
+        '...' +
+        address.slice(-5, -1)
+}
+
 
 export {
     getPolygonTokenList,
     isEthAdress,
     importToken,
-    getImportedToken
+    getImportedToken,
+    truncateAddress
 }

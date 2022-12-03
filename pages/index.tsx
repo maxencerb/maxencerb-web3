@@ -27,20 +27,6 @@ export default function Home() {
                         subtitle='Some functionnality soon to be added'
                         disabled
                     />
-                    <DialogTrigger
-                        title="Test Title"
-                    >
-                        {(onPress) => (
-                            <Button
-                                onPress={onPress}
-                            >
-                                test
-                            </Button>
-                        )}
-                        {(onClose) => (
-                            <div>test</div>
-                        )}
-                    </DialogTrigger>
                 </div>
             </div>
            

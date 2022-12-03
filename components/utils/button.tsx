@@ -1,0 +1,26 @@
+import React from 'react'
+import type { ReactNode } from 'react'; 
+import Link from 'next/link'
+
+type ButtonProps = {
+    children: ReactNode,
+    href?: string,
+    onPress?: () => void
+}
+
+export function Button({ children, href, onPress }: ButtonProps) {
+
+    const className="rounded-md py-2 px-4 bg-c-dark drop-shadow-md transition duration-150 ease-in-out hover:scale-105"
+    
+    return href ? (
+        <Link href={href} target='_blank'>
+            <button className={className}>
+                {children}
+            </button>
+        </Link>
+    ) : (
+        <button className={className} onClick={onPress}>
+            {children}
+        </button>
+    )
+}

@@ -1,14 +1,14 @@
 import '../styles/globals.css'
 import type { AppProps } from 'next/app'
 import Web3Wrapper from '@/components/web3-wrapper'
-import { SWRConfig } from 'swr'
+import PortalProvider from '@/hooks/portal'
 
 export default function App({ Component, pageProps }: AppProps) {
     return (
-        // <SWRConfig>
-            <Web3Wrapper>
+        <Web3Wrapper>
+            <PortalProvider>
                 <Component {...pageProps} />
-            </Web3Wrapper>
-        // </SWRConfig>
+            </PortalProvider>
+        </Web3Wrapper>
     )
 }

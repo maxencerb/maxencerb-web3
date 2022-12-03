@@ -1,4 +1,6 @@
 import React, { createContext, useContext, useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import type { Transition } from 'framer-motion'
 
 type PortalProps = {
     setPortal: (component: React.ReactNode) => void,
@@ -15,6 +17,12 @@ const portalContext = createContext<PortalProps>({
 type PortalProviderPros = {
     children: React.ReactNode
 }
+
+const transitionProps: Transition = {
+    type: "tween",
+    duration: .2
+}
+
 
 export default function PortalProvider({ children }: PortalProviderPros) {
     
@@ -35,6 +43,42 @@ export default function PortalProvider({ children }: PortalProviderPros) {
             onClose
         }}>
             {children}
+            <AnimatePresence>
+                {portalContent && (
+                    <motion.div
+                        className='fixed top-0 left-0 w-screen h-screen bg-black bg-opacity-75 z-50'
+                        initial={{
+                            opacity: 0
+                        }}
+                        animate={{
+                            opacity: 1
+                        }}
+                        exit={{
+                            opacity: 0
+                        }}
+                        onClick={onClose}
+                        key="portal-outer-container"
+                        transition={transitionProps}
+                    >
+                        <motion.div
+                            key="portal-inner-container"
+                            className='w-full h-full flex items-center justify-center'
+                            initial={{
+                                y:50
+                            }}
+                            animate={{
+                                y:0
+                            }}
+                            exit={{
+                                y:50
+                            }}
+                            transition={transitionProps}
+                        >
+                            {portalContent}
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </portalContext.Provider>
     )
 }

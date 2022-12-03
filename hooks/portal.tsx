@@ -56,13 +56,12 @@ export default function PortalProvider({ children }: PortalProviderPros) {
                         exit={{
                             opacity: 0
                         }}
-                        onClick={onClose}
                         key="portal-outer-container"
                         transition={transitionProps}
                     >
                         <motion.div
                             key="portal-inner-container"
-                            className='w-full h-full flex items-center justify-center'
+                            className='w-full h-full flex items-center justify-center relative'
                             initial={{
                                 y:50
                             }}
@@ -74,7 +73,13 @@ export default function PortalProvider({ children }: PortalProviderPros) {
                             }}
                             transition={transitionProps}
                         >
-                            {portalContent}
+                            <div className='z-10'>
+                                {portalContent}
+                            </div>
+                            <div
+                                className='absolute top-0 left-0 w-full h-full z-0'
+                                onClick={onClose}
+                            />
                         </motion.div>
                     </motion.div>
                 )}

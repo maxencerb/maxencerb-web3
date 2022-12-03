@@ -25,7 +25,7 @@ export default function Home() {
                         subtitle='Some functionnality soon to be added'
                         disabled
                     />
-                    {/* <Button onPress={() => {
+                    <Button onPress={() => {
                         setPortal(
                             <div>
                                 test
@@ -33,7 +33,7 @@ export default function Home() {
                         )
                     }}>
                         Test
-                    </Button> */}
+                    </Button>
                 </div>
             </div>
            

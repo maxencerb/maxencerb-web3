@@ -1,6 +1,5 @@
 import type { Token } from '@/types/tokens'
 import React from 'react'
-import { FaSearch } from 'react-icons/fa'
 import { TextInput } from '@/components/utils/input'
 import { useTextInputController } from '@/hooks/useInputController'
 import { useTokenSearch } from '@/hooks/useTokenList'
@@ -58,7 +57,6 @@ export function TokenTable({ tokens }: TokenTableProps) {
                 <div className='font-semibold'>Select a token</div>
                 <div className='w-full flex items-center space-x-4'>
                     <TextInput className='flex-grow' controller={controller}/>
-                    {/* <FaSearch className='h-full'/> */}
                 </div>
             </div>
             {tokenResult.map(token => (

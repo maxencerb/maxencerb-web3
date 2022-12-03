@@ -2,7 +2,12 @@ import type { Token } from '@/types/tokens'
 import React from 'react'
 import { TextInput } from '@/components/utils/input'
 import { useTextInputController } from '@/hooks/useInputController'
-import { useTokenSearch } from '@/hooks/useTokenList'
+import { POLYGON_TOKEN_LIST_KEY_LOCAL, useTokenSearch } from '@/hooks/useTokenList'
+import { importToken, isEthAdress } from '@/utils/token'
+import { Button } from '../utils/button'
+import { fetchToken } from '@wagmi/core'
+import { useSWRConfig } from 'swr'
+
 
 type TokenLineProps = {
     token: Token
@@ -51,6 +56,12 @@ export function TokenTable({ tokens }: TokenTableProps) {
 
     const tokenResult = useTokenSearch(tokens, value)
 
+    const isSearchAddress = isEthAdress(value)
+
+    const { mutate, cache } = useSWRConfig()
+
+    console.log(cache)
+
     return (
         <div className='w-full relative'>
             <div className='sticky top-0 p-4 bg-black z-10 bg-opacity-70 backdrop-blur-md shadow-md border-b border-c-lighter space-y-2'>
@@ -59,12 +70,25 @@ export function TokenTable({ tokens }: TokenTableProps) {
                     <TextInput className='flex-grow' controller={controller}/>
                 </div>
             </div>
-            {tokenResult.map(token => (
+            {tokenResult.length ? tokenResult.map(token => (
                 <TokenLine
                     token={token}
                     key={token.address}
                 />
-            ))}
+            )) : (
+                <div className='w-full flex items-center flex-col p-4 space-y-4'>
+                    <div className='font-semibold'>No token Found</div>
+                   {isSearchAddress && (
+                        <Button onPress={async () => {
+                            importToken(value, () => {
+                                    mutate(POLYGON_TOKEN_LIST_KEY_LOCAL)
+                            })
+                        }}>
+                            Import Token
+                        </Button>
+                   )} 
+                </div>
+            )}
         </div>
     )
 }

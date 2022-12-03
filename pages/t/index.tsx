@@ -1,5 +1,5 @@
 import AppBar from '@/components/appbar'
-import { TokenLine, TokenTable } from '@/components/t/tokens'
+import { TokenTable } from '@/components/t/tokens'
 import Card from '@/components/utils/card'
 import { usePolygonTokenList } from '@/hooks/useTokenList'
 import React from 'react'

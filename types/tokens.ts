@@ -17,8 +17,8 @@ type Token = {
     decimals: number,
     address: string,
     logoURI?: string,
-    tags: string[],
-    extension: TokenExtension
+    tags?: string[],
+    extension?: TokenExtension
 }
 
 export type {

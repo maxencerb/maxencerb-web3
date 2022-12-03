@@ -1,16 +1,30 @@
 import { Token } from "@/types/tokens"
-import { getPolygonTokenList, isEthAdress } from "@/utils/token"
+import { getImportedToken, getPolygonTokenList, isEthAdress } from "@/utils/token"
 import { useMemo } from "react"
 import useSWR from 'swr'
 
-const POLYGON_TOKEN_LIST_KEY = 'polygon-token-list'
+export const POLYGON_TOKEN_LIST_KEY = 'wi:polygon-token-list'
+export const POLYGON_TOKEN_LIST_KEY_SERVER = 'wi:polygon-token-list-server'
+export const POLYGON_TOKEN_LIST_KEY_LOCAL = 'wi:polygon-token-list-local'
+
 
 const usePolygonTokenList = () => {
-    const { data, error } = useSWR(POLYGON_TOKEN_LIST_KEY, getPolygonTokenList)
+    const { data: serverTokens, error } = useSWR([POLYGON_TOKEN_LIST_KEY, POLYGON_TOKEN_LIST_KEY_SERVER], getPolygonTokenList)
+    const { data: localTokens, error: error_local } = useSWR(POLYGON_TOKEN_LIST_KEY_LOCAL, getImportedToken)
+
+    const withServer = serverTokens || []
+    const allTokens = localTokens ? [
+        ...withServer,
+        ...localTokens
+    ] : withServer
+
     return {
-        tokens: data || [],
-        isLoading: !data,
-        error
+        tokens: allTokens,
+        isLoading: !serverTokens,
+        errors: [
+            error,
+            error_local
+        ]
     }
 }
 
@@ -38,8 +52,8 @@ const useTokenSearch = (tokens: Token[], searchRaw: string): Token[] => {
                 score += 2
             }
             search.split(' ').forEach(word => {
-                const isIncluded = token.name.split(' ').reduce((prev, token_word) => {
-                    return prev || token_word.startsWith(word)
+                const isIncluded = name.split(' ').reduce((prev, token_word) => {
+                    return (token_word.startsWith(word) || prev)
                 }, false)
                 if (isIncluded) score += 1
             })

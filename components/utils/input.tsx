@@ -3,13 +3,14 @@ import React from 'react'
 
 type TextInputProps = {
     controller: TextInputController,
-    className?: string
+    className?: string,
+    isSearch?: boolean
 }
 
-export function TextInput({ controller, className }: TextInputProps) {
+export function TextInput({ controller, className, isSearch }: TextInputProps) {
     return (
         <input 
-            type="text" 
+            type={isSearch ? "search" :"text"}
             value={controller.value}
             placeholder={controller.placeholder}
             onChange={(event) => {

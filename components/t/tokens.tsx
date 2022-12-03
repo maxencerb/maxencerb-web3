@@ -73,7 +73,7 @@ export function TokenTable({ tokens }: TokenTableProps) {
             <div className='sticky top-0 p-4 bg-black z-10 bg-opacity-70 backdrop-blur-md shadow-md border-b border-c-lighter space-y-2'>
                 <div className='font-semibold'>Select a token</div>
                 <div className='w-full flex items-center space-x-4'>
-                    <TextInput className='flex-grow' controller={controller}/>
+                    <TextInput className='flex-grow' controller={controller} isSearch/>
                 </div>
             </div>
             {tokenResult.length ? tokenResult.map(token => (

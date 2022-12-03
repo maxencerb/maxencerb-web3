@@ -63,13 +63,13 @@ export default function PortalProvider({ children }: PortalProviderPros) {
                             key="portal-inner-container"
                             className='w-full h-full flex items-center justify-center relative'
                             initial={{
-                                y:50
+                                y:20
                             }}
                             animate={{
                                 y:0
                             }}
                             exit={{
-                                y:50
+                                y:20
                             }}
                             transition={transitionProps}
                         >

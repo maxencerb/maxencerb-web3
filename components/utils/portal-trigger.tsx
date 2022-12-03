@@ -1,11 +1,11 @@
 import { usePortal } from '@/hooks/portal'
 import React from 'react'
 
-type PortalComponent = (onClose: () => void) => React.ReactNode
+export type PortalComponent = (onClose: () => void) => React.ReactNode
 
-type TriggerComponent = (onPress: () => void) => React.ReactNode
+export type TriggerComponent = (onPress: () => void) => React.ReactNode
 
-type PortalTriggerProps = {
+export type PortalTriggerProps = {
     children: [TriggerComponent, PortalComponent]
 }
 

@@ -13,7 +13,6 @@ export default function Tools() {
             <AppBar/>
             <div className='w-full flex justify-center p-4'>
                 <div className='w-full max-w-lg space-y-4'>
-                    <div className=' text-lg font-bold'>Tokens</div>
                     <Card variant='filled' className='h-[80vh] overflow-auto'>
                         {isLoading || !tokens ? (
                             <div>loading</div>

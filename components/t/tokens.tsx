@@ -1,5 +1,5 @@
 import type { Token } from '@/types/tokens'
-import React from 'react'
+import React, { useState } from 'react'
 import { TextInput } from '@/components/utils/input'
 import { useTextInputController } from '@/hooks/useInputController'
 import { POLYGON_TOKEN_LIST_KEY_LOCAL, useTokenSearch } from '@/hooks/useTokenList'
@@ -18,21 +18,29 @@ type TokenTableProps = {
 }
 
 export function TokenLine({ token }: TokenLineProps) {
+
+    const [imageError, setImageError] = useState(false)
+
     return (
         <div className='flex items-center justify-between cursor-pointer hover:bg-white hover:bg-opacity-30 transition duration-75 ease-in-out py-2 px-4'>
             <div className='flex space-x-2 items-center'>
                 <div>
-                    {token.logoURI ? (
+                    {token.logoURI && !imageError ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
                             src={token.logoURI}
                             alt={token.name}
                             className='h-10'
+                            onError={() => {
+                                setImageError(true)
+                            }}
                         />
                     ) : (
                         <div
-                            className='h-10 aspect-square bg-gray-400 rounded-full border-2 border-c-lighter'
-                        />
+                            className='h-10 aspect-square bg-c-dark rounded-full border-2 border-c-lighter text-xs flex items-center justify-center overflow-hidden'
+                        >
+                            {token.symbol}
+                        </div>
                     )}
                 </div>
                 <div className='flex flex-col justify-center'>
@@ -58,9 +66,7 @@ export function TokenTable({ tokens }: TokenTableProps) {
 
     const isSearchAddress = isEthAdress(value)
 
-    const { mutate, cache } = useSWRConfig()
-
-    console.log(cache)
+    const { mutate } = useSWRConfig()
 
     return (
         <div className='w-full relative'>

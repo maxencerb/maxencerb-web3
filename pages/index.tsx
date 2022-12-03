@@ -2,6 +2,7 @@ import AppBar from '@/components/appbar'
 import Welcome from '@/components/intro/welcome'
 import PageCard from '@/components/page-card'
 import { Button } from '@/components/utils/button'
+import PortalTrigger from '@/components/utils/portal-trigger'
 import { usePortal } from '@/hooks/portal'
 
 export default function Home() {
@@ -25,15 +26,18 @@ export default function Home() {
                         subtitle='Some functionnality soon to be added'
                         disabled
                     />
-                    <Button onPress={() => {
-                        setPortal(
-                            <div>
+                    <PortalTrigger>
+                        {(onPress) => (
+                            <Button
+                                onPress={onPress}
+                            >
                                 test
-                            </div>
-                        )
-                    }}>
-                        Test
-                    </Button>
+                            </Button>
+                        )}
+                        {(onClose) => (
+                            <div>test</div>
+                        )}
+                    </PortalTrigger>
                 </div>
             </div>
            

@@ -12,6 +12,7 @@ import { formatUnits } from 'ethers/lib/utils'
 import { useBalances } from '@/hooks/useBalances'
 import type { BigNumber } from 'ethers'
 import { MdOutlineContentCopy } from 'react-icons/md'
+import { BiLinkExternal } from 'react-icons/bi'
 
 
 type TokenLineProps = {
@@ -60,14 +61,19 @@ export function TokenInformation({ onClose, token, balance }: TokenInformationPr
         <div className='space-y-4'>
             <div className='space-y-2 text-sm'>
                 <div className='w-full flex justify-between items-center opacity-80'>
-                    <div className='font-semibold'>Contract</div>
                     <div className='flex items-center space-x-2'>
-                        <div>{truncateAddress(token.address)}</div>
+                        <div className='font-semibold'>Contract</div>
+                        <IconButton href={`https://polygonscan.com/token/${token.address}`}>
+                            <BiLinkExternal/>
+                        </IconButton>
+                    </div>
+                    <div className='flex items-center space-x-2'>
                         <IconButton onPress={() => {
                             navigator.clipboard.writeText(token.address)
                         }}>
                             <MdOutlineContentCopy/>
                         </IconButton>
+                        <div>{truncateAddress(token.address)}</div>
                     </div>
                 </div>
                 <div className='w-full flex justify-between items-center opacity-80'>

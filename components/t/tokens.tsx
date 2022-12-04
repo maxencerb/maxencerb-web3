@@ -13,6 +13,7 @@ import { useBalances } from '@/hooks/useBalances'
 import type { BigNumber } from 'ethers'
 import { MdOutlineContentCopy } from 'react-icons/md'
 import { BiLinkExternal } from 'react-icons/bi'
+import { useNotifications } from '@/hooks/notifications'
 
 
 type TokenLineProps = {
@@ -35,6 +36,8 @@ export function TokenInformation({ onClose, token, balance }: TokenInformationPr
         address: token.address,
         chainId: token.chainId
     })
+
+    const { push } = useNotifications()
 
     if (isLoading) {
         return <div className='w-full h-16 animate-pulse bg-gray-700 rounded-md'/>
@@ -70,6 +73,10 @@ export function TokenInformation({ onClose, token, balance }: TokenInformationPr
                     <div className='flex items-center space-x-2'>
                         <IconButton onPress={() => {
                             navigator.clipboard.writeText(token.address)
+                            push({
+                                title: 'Copied',
+                                content: 'Token address copied to clipboard'
+                            })
                         }}>
                             <MdOutlineContentCopy/>
                         </IconButton>

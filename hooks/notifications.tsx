@@ -61,6 +61,11 @@ function NotificationComponent(props: NotificationProps) {
         <AnimatePresence>
             {(isVisible && !props.isClosed) && (
                 <motion.div 
+                    drag='x'
+                    dragSnapToOrigin
+                    onDragEnd={(_, info) => {
+                        if (info.velocity.x > 20) setIsVisible(false)
+                    }}
                     className='w-screen max-w-full rounded-lg bg-gray-900 shadow-md p-4 text-md flex space-x-2'
                     initial={{
                         opacity: 0,
